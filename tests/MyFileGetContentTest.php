@@ -135,6 +135,23 @@ class MyFileGetContentTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * This function test MyFileGetrContent::parseUrl's
+     * error handling
+     */
+    public function testParseUrlError()
+    {
+        $method = self::getParseUrlFunction();
+
+        $urls = [
+            'a.b.c',
+            '',
+        ];
+        foreach ($urls as $url) {
+            $result = $method->invoke(null, $url);
+            $this->assertEquals(false, $result);
+        }
+    }
 
     /**
      * This function uses reflection to get private function
