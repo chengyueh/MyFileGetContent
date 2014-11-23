@@ -72,21 +72,69 @@ class MyFileGetContentTest extends PHPUnit_Framework_TestCase
     {
         $method = self::getParseUrlFunction();
 
-        $urls = [
-            'http://a.b.c',
-            'http://a.b.c/',
-            'http://a.b.c/d/e/',
-            'https://a.b.c',
-            'http://a.b.c:5566',
-            'http://a.b.c:5566/d/e/',
-            'ftp://a.b.c'
+        $dataSets = [
+            [
+                'url' => 'http://a.b.c',
+                'result' => [
+                    'protocol' => 'http',
+                    'host' => 'a.b.c',
+                    'port' => '80',
+                    'resource' => ''
+                ]
+            ],
+            [
+                'url' => 'http://a.b.c/',
+                'result' => [
+                    'protocol' => 'http',
+                    'host' => 'a.b.c',
+                    'port' => '80',
+                    'resource' => ''
+                ]
+            ],
+            [
+                'url' => 'http://a.b.c/d/e',
+                'result' => [
+                    'protocol' => 'http',
+                    'host' => 'a.b.c',
+                    'port' => '80',
+                    'resource' => 'd/e'
+                ]
+            ],
+            [
+                'url' => 'https://a.b.c',
+                'result' => [
+                    'protocol' => 'https',
+                    'host' => 'a.b.c',
+                    'port' => '443',
+                    'resource' => ''
+                ]
+            ],
+            [
+                'url' => 'http://a.b.c:5566',
+                'result' => [
+                    'protocol' => 'http',
+                    'host' => 'a.b.c',
+                    'port' => '5566',
+                    'resource' => ''
+                ]
+            ],
+            [
+                'url' => 'http://a.b.c:5566/d/e',
+                'result' => [
+                    'protocol' => 'http',
+                    'host' => 'a.b.c',
+                    'port' => '5566',
+                    'resource' => 'd/e'
+                ]
+            ]
         ];
 
-        foreach ($urls as $url) {
-            $result = $method->invoke(null, $url);
-            $this->assertEquals(4, sizeof($result));
+        foreach ($dataSets as $dataSet) {
+            $result = $method->invoke(null, $dataSet['url']);
+            $this->assertEquals($dataSet['result'], $result);
         }
     }
+
 
     /**
      * This function uses reflection to get private function
