@@ -23,7 +23,8 @@ class MyFileGetContent
      *
      * @param string String of url
      *
-     * @return Array array contains protocol, host and resource.
+     * @return If input is invalid, return boolean false.
+     *         Or, array contains protocol, host and resource.
      */
     private static function parseUrl($url)
     {
@@ -32,6 +33,10 @@ class MyFileGetContent
         // http(s): / / aaa.bbb.ccc / ddd/eee
         //  0        1       2          3
         $splitArr = explode("/", $url, 4);
+
+        if (3 > sizeof($splitArr)) {
+            return false;
+        }
 
         $returnArr = array();
 
