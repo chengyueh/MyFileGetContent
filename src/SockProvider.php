@@ -1,6 +1,6 @@
 <?php
 
-namespace poyu;
+namespace Poyu;
 
 class SockProvider
 {

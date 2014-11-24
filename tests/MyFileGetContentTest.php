@@ -1,8 +1,8 @@
 <?php
 
-use poyu\MyFileGetContent;
+namespace Poyu;
 
-class MyFileGetContentTest extends PHPUnit_Framework_TestCase
+class MyFileGetContentTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * This function is to compare result of MyFileGetContent::get()
@@ -162,7 +162,7 @@ class MyFileGetContentTest extends PHPUnit_Framework_TestCase
      */
     private static function getParseUrlFunction()
     {
-        $class = new ReflectionClass('poyu\MyFileGetContent');
+        $class = new \ReflectionClass('Poyu\MyFileGetContent');
         $method = $class->getMethod('parseUrl');
         $method->setAccessible(true);
         return $method;
