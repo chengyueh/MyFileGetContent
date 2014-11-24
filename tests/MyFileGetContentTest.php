@@ -146,6 +146,7 @@ class MyFileGetContentTest extends PHPUnit_Framework_TestCase
         $urls = [
             'a.b.c',
             '',
+            '////////'
         ];
         foreach ($urls as $url) {
             $result = $method->invoke(null, $url);
