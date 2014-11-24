@@ -6,6 +6,7 @@ class SockProvider
 {
     private $host;
     private $port;
+    private $errorMessage;
 
     private $fp;
 
@@ -31,7 +32,7 @@ class SockProvider
             $this->host,
             $this->port,
             $errno,
-            $errstr,
+            $this->errorMessage,
             self::$timeout
         );
 
@@ -62,4 +63,13 @@ class SockProvider
     {
         fwrite($this->fp, $data);
     }
+
+    /**
+     * This function give error message to user on failure
+     */
+    public function getError()
+    {
+        return $this->errorMessage;
+    }
+
 }

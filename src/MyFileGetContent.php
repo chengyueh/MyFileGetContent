@@ -79,33 +79,31 @@ class MyFileGetContent
     private static function connect($host, $resource, $protocol, $port)
     {
         if ('http' === $protocol) {
-            $fp = @fsockopen($host, $port, $errno, $errstr, 30);
+            $sock = new SockProvider($host, $port);
         } elseif ('https' === $protocol) {
-             $fp = @fsockopen("ssl://" . $host, $port, $errno, $errstr, 30);
+             $sock = new SockProvider("ssl://" . $host, $port);
         } else {
              self::$errMessage = "Unknown protocol";
              return false;
         }
 
-        if (!$fp) {
-            self::$errMessage = $errstr;
+        if (false === $sock->connect()) {
+            self::$errMessage = $sock->getError();
             return false;
         }
 
-        fwrite(
-            $fp,
+        $sock->write(
             "GET /$resource HTTP/1.1\r\n" .
             "Host: $host\r\n" .
             "Connection: Close\r\n\r\n"
         );
 
-        $statusLine = fgets($fp);
+        $statusLine = $sock->getLine();
         $splitArr = explode(" ", $statusLine, 3);
         $returnCode = (int)$splitArr[1];
 
         $headers = array();
-        while (!feof($fp)) {
-            $header = fgets($fp);
+        while ($header = $sock->getLine()) {
 
             if ("\r\n" === $header) {
                 break;
@@ -118,11 +116,9 @@ class MyFileGetContent
         //deal with HTTP code 302 and 301, need to redirect
         if (302 == $returnCode or 301 == $returnCode) {
             $arr = self::parseUrl($headers['Location']);
-            fclose($fp);
             return self::connect($arr['host'], $arr['resource'], $arr['protocol'], $arr['port']);
         } elseif (200 != $returnCode) {
             self::$errMessage = "Http Error : $returnCode\n";
-            fclose($fp);
             return false;
         }
 
@@ -131,12 +127,11 @@ class MyFileGetContent
         // if Transfer-Encoding is chunked, deal with it
         if (isset($headers['Transfer-Encoding']) and
             'chunked' === $headers['Transfer-Encoding']) {
-            while (!feof($fp)) {
-                $data = fgets($fp);
+            while ($data = $sock->getLine()) {
                 $chunkSize = hexdec($data);
 
                 while (0 < $chunkSize) {
-                    $data = fgets($fp);
+                    $data = $sock->getLine();
                     $chunkSize -= strlen($data);
                     if (0 > $chunkSize) {
                         $data = substr($data, 0, -2);
@@ -146,11 +141,10 @@ class MyFileGetContent
             }
         // else, direct get
         } else {
-            while (!feof($fp)) {
-                $contents .= fgets($fp);
+            while ($data = $sock->getLine()) {
+                $contents .= $data;
             }
         }
-        fclose($fp);
 
         return $contents;
     }
