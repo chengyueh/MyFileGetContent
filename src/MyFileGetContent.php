@@ -65,6 +65,14 @@ class MyFileGetContent
             $returnArr['resource'] = '';
         }
 
+        if (
+            '' === $returnArr['host'] or
+            '' === $returnArr['protocol'] or
+            '' === $returnArr['port']
+        ) {
+            return false;
+        }
+
         return $returnArr;
     }
 
