@@ -2,7 +2,7 @@
 
 namespace Poyu;
 
-class SockProvider
+class SockProvider implements ConnectionProvider
 {
     private $host;
     private $port;
