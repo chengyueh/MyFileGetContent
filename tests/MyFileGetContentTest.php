@@ -13,7 +13,8 @@ class MyFileGetContentTest extends PHPUnit_Framework_TestCase
         $sites = [
             'http://php.net',
             'http://cs.nctu.edu.tw',
-            'http://linux.vbird.org/'
+            'http://linux.vbird.org/',
+            'https://phpunit.de/'
         ];
 
         foreach ($sites as $site) {
