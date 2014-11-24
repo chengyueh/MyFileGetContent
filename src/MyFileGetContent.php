@@ -5,6 +5,7 @@ namespace Poyu;
 class MyFileGetContent
 {
     private static $errMessage;
+    private static $connectionProvider = 'Poyu\SockProvider';
 
     public static function get($url)
     {
@@ -15,6 +16,11 @@ class MyFileGetContent
     public static function lastError()
     {
         return self::$errMessage;
+    }
+
+    public static function setConnectionProvider($connectionProvider)
+    {
+        self::$connectionProvider = $connectionProvider;
     }
 
     /**
@@ -79,9 +85,9 @@ class MyFileGetContent
     private static function connect($host, $resource, $protocol, $port)
     {
         if ('http' === $protocol) {
-            $sock = new SockProvider($host, $port);
+            $sock = new self::$connectionProvider($host, $port);
         } elseif ('https' === $protocol) {
-             $sock = new SockProvider("ssl://" . $host, $port);
+             $sock = new self::$connectionProvider("ssl://" . $host, $port);
         } else {
              self::$errMessage = "Unknown protocol";
              return false;
