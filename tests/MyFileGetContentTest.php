@@ -61,7 +61,8 @@ class MyFileGetContentTest extends PHPUnit_Framework_TestCase
             $this->assertEquals(false, $result);
             $this->assertEquals(
                 'php_network_getaddresses: getaddrinfo failed: hostname nor servname provided, or not known',
-                MyFileGetContent::lastError());
+                MyFileGetContent::lastError()
+            );
         }
     }
 
@@ -165,5 +166,4 @@ class MyFileGetContentTest extends PHPUnit_Framework_TestCase
         $method->setAccessible(true);
         return $method;
     }
-
 }
