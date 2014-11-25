@@ -53,6 +53,8 @@ class MyFileGetContentTest extends \PHPUnit_Framework_TestCase
     /**
      * This function is to compare result of MyFileGetContent::get()
      * and wget using pupolar sites.
+     *
+     * @group net
      */
     public function testPopularWeb()
     {
@@ -77,6 +79,8 @@ class MyFileGetContentTest extends \PHPUnit_Framework_TestCase
     /**
      * This function is to connect to invalid site,
      * test if error message is OK.
+     *
+     * @group net
      */
     public function testHttpError()
     {
@@ -96,6 +100,8 @@ class MyFileGetContentTest extends \PHPUnit_Framework_TestCase
     /**
      * This function tries to connect to invalid host,
      * test if error message is OK
+     *
+     * @group net
      */
     public function testSockError()
     {
