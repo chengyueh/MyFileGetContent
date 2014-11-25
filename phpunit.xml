@@ -8,6 +8,11 @@
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>
+    <groups>
+        <exclude>
+            <group>net</group>
+        </exclude>
+    </groups>
     <logging>
         <log type="coverage-html" target="reports/coverage"
             title="coverage report"
