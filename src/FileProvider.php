@@ -36,7 +36,7 @@ class FileProvider implements ConnectionProvider
     public function getLine()
     {
         if (!$this->fp) {
-            $this->fp = fopen(
+            $this->fp = @fopen(
                 $this->root . '/' . $this->dirPath . '/' . $this->fileName,
                 'r'
             );
