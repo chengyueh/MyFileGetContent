@@ -294,5 +294,4 @@ class MyFileGetContentTest extends \PHPUnit_Framework_TestCase
         $method->setAccessible(true);
         return $method;
     }
-
 }
