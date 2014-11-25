@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
+  <link href="css/style.css" type="text/css" rel="stylesheet">
+  <!--[if lt IE 9]><script src="js/html5shiv.min.js"></script><![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
+  <title>PHPUnit &#x2013; The PHP Testing Framework</title>
+ </head>
+ <body>
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+   <div class="container">
+    <div class="navbar-header">
+     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+     </button>
+    </div>
+    <div class="navbar-collapse collapse">
+     <ul class="nav navbar-nav">
+      <li class="active"><a href="index.html">Home</a></li>
+      <li><a href="getting-started.html">Getting Started</a></li>
+      <li><a href="documentation.html">Documentation</a></li>
+      <li><a href="presentations.html">Presentations</a></li>
+      <li><a href="plugins.html">Plugins</a></li>
+      <li><a href="https://github.com/sebastianbergmann/phpunit">GitHub</a></li>
+     </ul>
+    </div>
+   </div>
+  </div>
+  <div class="container">
+   <div class="jumbotron welcome-block">
+    <h1>Welcome to PHPUnit!</h1>
+    <p class="lead">PHPUnit is a programmer-oriented testing framework for PHP.<br/>It is an instance of the xUnit architecture for unit testing frameworks.</p>
+    <p class="subnav">
+     <a class="btn btn-info" href="getting-started.html" role="button">Take the first steps</a>
+     <a class="btn btn-primary" href="documentation.html" role="button">Read the documentation</a>
+     <a class="btn btn-learn" href="presentations.html" role="button">Learn from presentations</a>
+     <a class="btn btn-training" href="http://thephp.cc/phpunit" role="button">Register for training</a>
+     <a class="btn btn-github" href="https://github.com/sebastianbergmann/phpunit/blob/master/CONTRIBUTING.md" role="button">Contribute!</a>
+    </p>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <div class="panel panel-danger">
+      <div class="panel-heading">
+       <h2 class="panel-title">pear.phpunit.de will be shut down on December, 31 2014!</h2>
+      </div>
+      <div class="panel-body">
+       <p><a href="https://github.com/sebastianbergmann/phpunit/wiki/End-of-Life-for-PEAR-Installation-Method">Using the PEAR Installer to install PHPUnit is no longer supported.</a> Please <a href="http://phpunit.de/manual/current/en/installation.html">read the documentation</a> and learn how to use PHPUnit from a PHAR or install it via Composer. We are sorry for any inconvenience this may cause.</p>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div id="download" class="col-md-12">
+     <h1>Download PHPUnit</h1>
+     <br/>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <p>All official releases of code distributed by the PHPUnit Project are signed by the release manager for the release. PGP signatures and SHA1 hashes are available for verification on <a href="https://phar.phpunit.de/">phar.phpunit.de</a>. Please refer to the <a href="http://phpunit.de/manual/current/en/installation.html#installation.phar.verification">documentation</a> for details on how to verify PHPUnit releases.</p>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-4">
+     <div class="panel panel-success">
+      <div class="panel-heading">
+       <h2 class="panel-title">Stable Release</h2>
+      </div>
+      <div class="panel-body">
+       <p>PHPUnit 4.3 is the current <strong>stable</strong> release series.<br/>It became <em>stable</em> on October 3, 2014.</p>
+       <p>You can find out what's new in PHPUnit 4.3 in the <a href="https://github.com/sebastianbergmann/phpunit/wiki/ChangeLog-for-PHPUnit-4.3">ChangeLog</a>.</p>
+       <div class="center">
+        <a class="btn btn-success" href="https://phar.phpunit.de/phpunit.phar" role="button">
+         <span class="glyphicon glyphicon-floppy-save"></span> Download PHPUnit 4.3<br />
+         <small>(latest stable release)</small>
+        </a>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="col-md-4">
+     <div class="panel panel-warning">
+      <div class="panel-heading">
+       <h2 class="panel-title">Beta-Quality Build</h2>
+      </div>
+      <div class="panel-body">
+       <p>PHPUnit 4.4 is the current <strong>beta</strong> release series.<br/>It will become <em>stable</em> on December 5, 2014.</p>
+       <p>You can find out what's new in PHPUnit 4.4 in the <a href="https://github.com/sebastianbergmann/phpunit/wiki/ChangeLog-for-PHPUnit-4.4">ChangeLog</a>.</p>
+       <div class="center">
+        <a class="btn btn-warning" href="https://phar.phpunit.de/phpunit-beta.phar" role="button">
+         <span class="glyphicon glyphicon-floppy-save"></span> Download PHPUnit 4.4<br />
+         <small>(latest nightly build)</small>
+        </a>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="col-md-4">
+     <div class="panel panel-danger">
+      <div class="panel-heading">
+       <h2 class="panel-title">Alpha-Quality Build</h2>
+      </div>
+      <div class="panel-body">
+       <p>PHPUnit 4.5 is the current <strong>alpha</strong> release series.<br/>It will go into <em>beta</em> on December 5, 2014.</p>
+       <p>You can find out what's new in PHPUnit 4.5 in the <a href="https://github.com/sebastianbergmann/phpunit/wiki/ChangeLog-for-PHPUnit-4.5">ChangeLog</a>.</p>
+       <div class="center">
+        <a class="btn btn-danger" href="https://phar.phpunit.de/phpunit-alpha.phar" role="button">
+         <span class="glyphicon glyphicon-floppy-save"></span> Download PHPUnit 4.5<br />
+         <small>(latest nightly build)</small>
+        </a>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <p>You can have a look at the <a href="https://github.com/sebastianbergmann/phpunit/milestones">roadmap</a> to find out what is currently planned for future releases of PHPUnit. Our <a href="https://github.com/sebastianbergmann/phpunit/wiki/Release-Process">release process</a> is documented as well.</p>
+    </div>
+   </div>
+   <hr>
+   <div class="row">
+    <div class="col-md-12">
+     <h1>Get Support</h1>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h2>Bug Reports</h2>
+     <p>If you believe you have discovered a bug in PHPUnit, please use the most specific issue tracker to enter bug reports and to search for existing reports:</p>
+     <div class="row">
+      <div class="col-md-6">
+       <ul>
+        <li><a href="https://github.com/sebastianbergmann/phpunit/issues">General</a></li>
+        <li><a href="https://github.com/sebastianbergmann/php-code-coverage/issues">Code Coverage</a></li>
+        <li><a href="https://github.com/sebastianbergmann/phpunit-mock-objects/issues">Stubbing and Mocking</a></li>
+       </ul>
+      </div>
+      <div class="col-md-6">
+       <ul>
+        <li><a href="https://github.com/sebastianbergmann/dbunit/issues">DbUnit</a></li>
+        <li><a href="https://github.com/sebastianbergmann/phpunit-selenium/issues">Selenium Integration</a></li>
+        <li><a href="https://github.com/sebastianbergmann/phpunit-documentation/issues">Documentation</a></li>
+       </ul>
+      </div>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h2>Mailing List</h2>
+     <p><a href="mailto:user-subscribe@phpunit.de">user@phpunit.de</a> is a mailing list where the usage of PHPUnit is discussed.</p>
+     <h2>Chat</h2>
+     <p><a href="https://gitter.im/sebastianbergmann/phpunit">gitter.im/sebastianbergmann/phpunit</a> is a place to chat about PHPUnit.</p>
+    </div>
+   </div>
+   <hr>
+   <div class="footer">
+    <p>Copyright &copy; 2001-2014 Sebastian Bergmann.</p>
+   </div>
+  </div>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(["trackPageView"]);
+  _paq.push(["enableLinkTracking"]);
+
+  (function() {
+    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://piwik.sebastian-bergmann.de/";
+    _paq.push(["setTrackerUrl", u+"piwik.php"]);
+    _paq.push(["setSiteId", "2"]);
+    var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+    g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+  })();
+  </script>
+ </body>
+</html>

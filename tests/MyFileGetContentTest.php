@@ -5,11 +5,58 @@ namespace Poyu;
 class MyFileGetContentTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * This function use FileProvider to test connection function
+     * Because FileProvider works without the internet,
+     * it can simply test parsing of connection function is correct or not
+     */
+    public function testConnection()
+    {
+        MyFileGetContent::setConnectionProvider('Poyu\FileProvider');
+
+        $class = new \ReflectionClass('Poyu\MyFileGetContent');
+
+        $property = $class->getProperty('connectionProvider');
+        $property->setAccessible(true);
+        //test the setter first
+        $this->assertEquals('Poyu\FileProvider', $property->getValue('connectionProvider'));
+
+        $method = $class->getMethod('connect');
+        $method->setAccessible(true);
+
+        $testCases = [
+            [
+                'args' => ['php.net', '', 'http', 80],
+                'goldendata' => 'phpnet80/index.html.gold'
+            ],
+            [
+                'args' => ['php.net', 'manual/en/class.reflection.php', 'http', 80],
+                'goldendata' => 'phpnet80/manual/en/class.reflection.php.gold'
+            ],
+            [
+                'args' => ['phpunit.de', '', 'https', 443],
+                'goldendata' => 'sslphpunitde443/index.html.gold'
+            ]
+        ];
+
+        foreach ($testCases as $testCase) {
+            $data = $method->invoke(
+                null,
+                $testCase['args'][0],
+                $testCase['args'][1],
+                $testCase['args'][2],
+                $testCase['args'][3]
+            );
+            $this->assertStringEqualsFile('tests/data/' . $testCase['goldendata'], $data);
+        }
+    }
+
+    /**
      * This function is to compare result of MyFileGetContent::get()
      * and wget using pupolar sites.
      */
     public function testPopularWeb()
     {
+        MyFileGetContent::setConnectionProvider('Poyu\SockProvider');
         $sites = [
             'http://php.net',
             'http://cs.nctu.edu.tw',
