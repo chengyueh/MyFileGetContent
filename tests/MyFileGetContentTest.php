@@ -13,15 +13,7 @@ class MyFileGetContentTest extends \PHPUnit_Framework_TestCase
     {
         MyFileGetContent::setConnectionProvider('Poyu\FileProvider');
 
-        $class = new \ReflectionClass('Poyu\MyFileGetContent');
-
-        $property = $class->getProperty('connectionProvider');
-        $property->setAccessible(true);
-        //test the setter first
-        $this->assertEquals('Poyu\FileProvider', $property->getValue('connectionProvider'));
-
-        $method = $class->getMethod('connect');
-        $method->setAccessible(true);
+        $method = self::getConnectFunction();
 
         $testCases = [
             [
@@ -34,6 +26,10 @@ class MyFileGetContentTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 'args' => ['phpunit.de', '', 'https', 443],
+                'goldendata' => 'sslphpunitde443/index.html.gold'
+            ],
+            [
+                'args' => ['phpunit.de', '', 'http', 80],
                 'goldendata' => 'sslphpunitde443/index.html.gold'
             ]
         ];
@@ -48,6 +44,77 @@ class MyFileGetContentTest extends \PHPUnit_Framework_TestCase
             );
             $this->assertStringEqualsFile('tests/data/' . $testCase['goldendata'], $data);
         }
+    }
+
+    /**
+     * This function test connect function's error control
+     */
+    public function testConnectionFail()
+    {
+        MyFileGetContent::setConnectionProvider('Poyu\FileProvider');
+
+        $method = self::getConnectFunction();
+
+        $testCases = [
+            [
+                'args' => ['nothishost.net', '', 'http', 80],
+                'msg' => 'sock error'
+            ],
+            [
+                'args' => ['a.b.c', '', 'ftp', 23],
+                'msg' => 'Unknown protocol'
+            ],
+            [
+                'args' => ['notfound.net', '', 'http', 80],
+                'msg' => 'Http Error : 404'
+            ]
+        ];
+
+        foreach ($testCases as $testCase) {
+            $data = $method->invoke(
+                null,
+                $testCase['args'][0],
+                $testCase['args'][1],
+                $testCase['args'][2],
+                $testCase['args'][3]
+            );
+            $this->assertEquals(false, $data);
+            $this->assertEquals($testCase['msg'], MyFileGetContent::lastError());
+        }
+
+    }
+
+    /**
+     * Test public get function
+     *
+     * @group integration
+     */
+    public function testGet()
+    {
+        $testCases = [
+            [
+                'url' => 'http://php.net',
+                'goldendata' => 'phpnet80/index.html.gold'
+            ],
+            [
+                'url' => 'http://php.net/manual/en/class.reflection.php',
+                'goldendata' => 'phpnet80/manual/en/class.reflection.php.gold'
+            ],
+            [
+                'url' => 'https://phpunit.de/',
+                'goldendata' => 'sslphpunitde443/index.html.gold'
+            ],
+            [
+                'url' => 'http://phpunit.de',
+                'goldendata' => 'sslphpunitde443/index.html.gold'
+            ]
+        ];
+
+        foreach ($testCases as $testCase) {
+            $data = MyFileGetContent::get($testCase['url']);
+            $this->assertStringEqualsFile('tests/data/' . $testCase['goldendata'], $data);
+        }
+
     }
 
     /**
@@ -210,8 +277,7 @@ class MyFileGetContentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * This function uses reflection to get private function
-     * MyFileGetContent::parseUrl()
+     * 2 util functions use reflection to get private function
      */
     private static function getParseUrlFunction()
     {
@@ -220,4 +286,13 @@ class MyFileGetContentTest extends \PHPUnit_Framework_TestCase
         $method->setAccessible(true);
         return $method;
     }
+
+    private static function getConnectFunction()
+    {
+        $class = new \ReflectionClass('Poyu\MyFileGetContent');
+        $method = $class->getMethod('connect');
+        $method->setAccessible(true);
+        return $method;
+    }
+
 }
