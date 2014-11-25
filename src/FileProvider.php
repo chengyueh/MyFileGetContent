@@ -65,10 +65,8 @@ class FileProvider implements ConnectionProvider
         }
     }
 
-    /**
-     * May be not used?
-     */
     public function getError()
     {
+        return 'sock error';
     }
 }

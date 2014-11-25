@@ -124,7 +124,7 @@ class MyFileGetContent
             $arr = self::parseUrl($headers['Location']);
             return self::connect($arr['host'], $arr['resource'], $arr['protocol'], $arr['port']);
         } elseif (200 != $returnCode) {
-            self::$errMessage = "Http Error : $returnCode\n";
+            self::$errMessage = "Http Error : $returnCode";
             return false;
         }
 
