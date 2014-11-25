@@ -48,4 +48,14 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals('test', $property->getValue($this->f));
     }
+
+    public function testgetLineFailure()
+    {
+        $this->f->write(
+            "GET /Nofile HTTP/1.1\r\n" .
+            "Host: http://12.34\r\n" .
+            "Connection: Close\r\n\r\n"
+        );
+        $this->assertEquals(false, $this->f->getLine());
+    }
 }
