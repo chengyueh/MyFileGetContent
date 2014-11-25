@@ -71,5 +71,4 @@ class SockProvider implements ConnectionProvider
     {
         return $this->errorMessage;
     }
-
 }

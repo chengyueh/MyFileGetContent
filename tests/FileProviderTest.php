@@ -11,7 +11,6 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $this->f = new FileProvider('http://12.34', 56);
     }
 
-    // Need Some Document?
     public function testConnect()
     {
         $this->assertEquals(true, $this->f->connect());
@@ -20,7 +19,6 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(false, $f->connect());
     }
 
-
     public function testGetLine()
     {
         $this->f->connect();
@@ -28,7 +26,6 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("Second line\n", $this->f->getLine());
         $this->assertEquals(null, $this->f->getLine());
     }
-
 
     public function testWrite()
     {
@@ -51,5 +48,4 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals('test', $property->getValue($this->f));
     }
-
 }
