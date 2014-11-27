@@ -18,10 +18,15 @@ class MyFileGetContent
         );
     }
 
-
-    public function post($url, $postData)
+    public static function post($url, $postData)
     {
         $arr = self::parseUrl($url);
+        return self::connect(
+            $arr['host'],
+            self::genPostString($arr['resource'], $arr['host'], $postData),
+            $arr['protocol'],
+            $arr['port']
+        );
     }
 
     public static function lastError()
@@ -174,6 +179,17 @@ class MyFileGetContent
             "Connection: Close\r\n\r\n";
     }
 
+    private static function genPostString($resource, $host, $postData)
+    {
+        $postString = http_build_query($postData);
+
+        return "POST /$resource HTTP/1.1\r\n" .
+            "Host: $host\r\n" .
+            "Connection: Close\r\n" .
+            "Content-Type: application/x-www-form-urlencoded\r\n" .
+            "Content-Length: " . strlen($postString) . "\r\n\r\n" .
+            $postString;
+    }
 }
 
 /*********************************************
