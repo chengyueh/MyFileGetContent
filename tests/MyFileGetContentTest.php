@@ -13,7 +13,8 @@ class MyFileGetContentTest extends \PHPUnit_Framework_TestCase
     {
         MyFileGetContent::setConnectionProvider('Poyu\FileProvider');
 
-        $method = self::getConnectFunction();
+        $method = self::getPrivateFunction('connect');
+        $genGetString = self::getPrivateFunction('genGetString');
 
         $testCases = [
             [
@@ -38,7 +39,11 @@ class MyFileGetContentTest extends \PHPUnit_Framework_TestCase
             $data = $method->invoke(
                 null,
                 $testCase['args'][0],
-                $testCase['args'][1],
+                $genGetString->invoke(
+                    null,
+                    $testCase['args'][1],
+                    $testCase['args'][0]
+                ),
                 $testCase['args'][2],
                 $testCase['args'][3]
             );
@@ -53,7 +58,8 @@ class MyFileGetContentTest extends \PHPUnit_Framework_TestCase
     {
         MyFileGetContent::setConnectionProvider('Poyu\FileProvider');
 
-        $method = self::getConnectFunction();
+        $method = self::getPrivateFunction('connect');
+        $genGetString = self::getPrivateFunction('genGetString');
 
         $testCases = [
             [
@@ -74,7 +80,11 @@ class MyFileGetContentTest extends \PHPUnit_Framework_TestCase
             $data = $method->invoke(
                 null,
                 $testCase['args'][0],
-                $testCase['args'][1],
+                $genGetString->invoke(
+                    null,
+                    $testCase['args'][1],
+                    $testCase['args'][0]
+                ),
                 $testCase['args'][2],
                 $testCase['args'][3]
             );
@@ -91,6 +101,8 @@ class MyFileGetContentTest extends \PHPUnit_Framework_TestCase
      */
     public function testGet()
     {
+        MyFileGetContent::setConnectionProvider('Poyu\FileProvider');
+
         $testCases = [
             [
                 'url' => 'http://php.net',
@@ -192,7 +204,7 @@ class MyFileGetContentTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseUrl()
     {
-        $method = self::getParseUrlFunction();
+        $method = self::getPrivateFunction('parseUrl');
 
         $dataSets = [
             [
@@ -263,7 +275,7 @@ class MyFileGetContentTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseUrlError()
     {
-        $method = self::getParseUrlFunction();
+        $method = self::getPrivateFunction('parseUrl');
 
         $urls = [
             'a.b.c',
@@ -277,21 +289,14 @@ class MyFileGetContentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * 2 util functions use reflection to get private function
+     * util function use reflection to get private function
      */
-    private static function getParseUrlFunction()
+    private static function getPrivateFunction($funcName)
     {
         $class = new \ReflectionClass('Poyu\MyFileGetContent');
-        $method = $class->getMethod('parseUrl');
+        $method = $class->getMethod($funcName);
         $method->setAccessible(true);
         return $method;
     }
 
-    private static function getConnectFunction()
-    {
-        $class = new \ReflectionClass('Poyu\MyFileGetContent');
-        $method = $class->getMethod('connect');
-        $method->setAccessible(true);
-        return $method;
-    }
 }
