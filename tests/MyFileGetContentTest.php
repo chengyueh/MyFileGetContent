@@ -130,6 +130,32 @@ class MyFileGetContentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * This function test posy
+     */
+    public function testPost()
+    {
+        MyFileGetContent::setConnectionProvider('Poyu\FileProvider');
+
+        $testCases = [
+            [
+                'url' => 'http://test.post/post.php',
+                'postData' => [
+                    'gg' => 10
+                ],
+                'goldendata' => 'testpost80/post.php.gold'
+            ]
+        ];
+
+        foreach ($testCases as $testCase) {
+            $data = MyFileGetContent::post($testCase['url'], $testCase['postData']);
+            $arr = file('tests/data/' . $testCase['goldendata']);
+            $this->assertStringEqualsFile('tests/data/' . $testCase['goldendata'], $data);
+        }
+
+
+    }
+
+    /**
      * This function is to compare result of MyFileGetContent::get()
      * and wget using pupolar sites.
      *
