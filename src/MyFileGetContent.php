@@ -10,7 +10,23 @@ class MyFileGetContent
     public static function get($url)
     {
         $arr = self::parseUrl($url);
-        return self::connect($arr['host'], $arr['resource'], $arr['protocol'], $arr['port']);
+        return self::connect(
+            $arr['host'],
+            self::genGetString($arr['resource'], $arr['host']),
+            $arr['protocol'],
+            $arr['port']
+        );
+    }
+
+    public static function post($url, $postData)
+    {
+        $arr = self::parseUrl($url);
+        return self::connect(
+            $arr['host'],
+            self::genPostString($arr['resource'], $arr['host'], $postData),
+            $arr['protocol'],
+            $arr['port']
+        );
     }
 
     public static function lastError()
@@ -82,7 +98,7 @@ class MyFileGetContent
         return $returnArr;
     }
 
-    private static function connect($host, $resource, $protocol, $port)
+    private static function connect($host, $sentString, $protocol, $port)
     {
         if ('http' === $protocol) {
             $sock = new self::$connectionProvider($host, $port);
@@ -98,11 +114,7 @@ class MyFileGetContent
             return false;
         }
 
-        $sock->write(
-            "GET /$resource HTTP/1.1\r\n" .
-            "Host: $host\r\n" .
-            "Connection: Close\r\n\r\n"
-        );
+        $sock->write($sentString);
 
         $statusLine = $sock->getLine();
         $splitArr = explode(" ", $statusLine, 3);
@@ -122,7 +134,12 @@ class MyFileGetContent
         //deal with HTTP code 302 and 301, need to redirect
         if (302 == $returnCode or 301 == $returnCode) {
             $arr = self::parseUrl($headers['Location']);
-            return self::connect($arr['host'], $arr['resource'], $arr['protocol'], $arr['port']);
+            return self::connect(
+                $arr['host'],
+                self::genGetString($arr['resource'], $arr['host']),
+                $arr['protocol'],
+                $arr['port']
+            );
         } elseif (200 != $returnCode) {
             self::$errMessage = "Http Error : $returnCode";
             return false;
@@ -153,6 +170,25 @@ class MyFileGetContent
         }
 
         return $contents;
+    }
+
+    private static function genGetString($resource, $host)
+    {
+        return "GET /$resource HTTP/1.1\r\n" .
+            "Host: $host\r\n" .
+            "Connection: Close\r\n\r\n";
+    }
+
+    private static function genPostString($resource, $host, $postData)
+    {
+        $postString = http_build_query($postData);
+
+        return "POST /$resource HTTP/1.1\r\n" .
+            "Host: $host\r\n" .
+            "Connection: Close\r\n" .
+            "Content-Type: application/x-www-form-urlencoded\r\n" .
+            "Content-Length: " . strlen($postString) . "\r\n\r\n" .
+            $postString;
     }
 }
 
